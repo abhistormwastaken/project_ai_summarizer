@@ -7,7 +7,7 @@ function Hero() {
         <nav className='flex justify-between items-center w-full pt-3 mb-10'>
             <img src={logo} alt="website_logo" className='w-28 object-contain'/>
             <button type='button'
-                onClick={()=>{window.open("https://github.com/abhistormwastaken/ai-article-summarizer")}}
+                onClick={()=>{window.open("https://github.com/abhistormwastaken/project_ai_summarizer")}}
                 className='black_btn'
             >Github</button>
         </nav>
