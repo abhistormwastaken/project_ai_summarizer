@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { copy, loader, linkIcon, tick } from '../assets'
 import { useLazyGetSummaryQuery } from '../services/article'
 
@@ -8,7 +8,17 @@ function Demo() {
     summary: '',
   })
 
-  const [getSummary, { error, isLoading}] = useLazyGetSummaryQuery()
+  const [allArticles, setAllArticles] = useState([])
+
+  const [getSummary, { error, isLoading }] = useLazyGetSummaryQuery()
+
+  useEffect(()=>{
+    const articlesFromLocalStorage = JSON.parse(localStorage.getItem('articles'))
+
+    if(articlesFromLocalStorage){
+      setAllArticles(articlesFromLocalStorage)
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,8 +29,12 @@ function Demo() {
     
     if(data?.summary){
       const newArticle = {...article, summary: data.summary}
+      const updatedAllArticles = [newArticle, ...allArticles]
+
       setArticle(newArticle)
-      console.log(newArticle)
+      setAllArticles(updatedAllArticles)
+
+      localStorage.setItem('articles', JSON.stringify(updatedAllArticles))
     }
   }
 
